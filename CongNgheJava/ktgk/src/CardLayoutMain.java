@@ -1,4 +1,4 @@
-package ktgk;
+package ktgk.src;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,11 +15,11 @@ public class CardLayoutMain extends JFrame {
         setTitle("Card Layout Methods");
         setSize(310, 160);
 
-        // Organize contentPanel
-        JPanel cPanel = new JPanel();
+        /* Organize questionPanel */
+        JPanel questionPanel = new JPanel();
 
         cObjl = new CardLayout();
-        cPanel.setLayout(cObjl);
+        questionPanel.setLayout(cObjl);
 
         JPanel jPanel1 = new JPanel();
         JPanel jPanel2 = new JPanel();
@@ -36,12 +36,12 @@ public class CardLayoutMain extends JFrame {
         jPanel3.add(jLabel3);
         jPanel4.add(jLabel4);
 
-        cPanel.add(jPanel1, "1");
-        cPanel.add(jPanel2, "2");
-        cPanel.add(jPanel3, "3");
-        cPanel.add(jPanel4, "4");
+        questionPanel.add(jPanel1, "1");
+        questionPanel.add(jPanel2, "2");
+        questionPanel.add(jPanel3, "3");
+        questionPanel.add(jPanel4, "4");
 
-        // Organize button panel
+        /* Organize button panel */
         JPanel btnPanel = new JPanel();
 
         JButton firstButton = new JButton("First");
@@ -55,30 +55,30 @@ public class CardLayoutMain extends JFrame {
         btnPanel.add(lastButton);
 
         firstButton.addActionListener((ActionEvent ae) -> {
-            cObjl.first(cPanel);
+            cObjl.first(questionPanel);
             currCard = 1;
         });
 
         lastButton.addActionListener((ActionEvent ae) -> {
-            cObjl.last(cPanel);
+            cObjl.last(questionPanel);
             currCard = 4;
         });
 
         nextButton.addActionListener((ActionEvent ae) -> {
             if (currCard < 4) {
                 currCard = currCard + 1;
-                cObjl.show(cPanel, "" + (currCard));
+                cObjl.show(questionPanel, "" + (currCard));
             }
         });
 
         previousButton.addActionListener((ActionEvent ae) -> {
             if (currCard > 1) {
                 currCard = currCard - 1;
-                cObjl.show(cPanel, "" + (currCard));
+                cObjl.show(questionPanel, "" + (currCard));
             }
         });
 
-        getContentPane().add(cPanel, BorderLayout.NORTH);
+        getContentPane().add(questionPanel, BorderLayout.NORTH);
 
         getContentPane().add(btnPanel, BorderLayout.SOUTH);
     }
