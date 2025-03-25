@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.*;
 
+/**
+ * Author: PhamHoangNam
+ * ID: 23210249
+ * 
+*/
 public class CardLayoutMain extends JFrame {
 
     private int currCard = 1;
