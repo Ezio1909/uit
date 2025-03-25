@@ -2,16 +2,101 @@ package ktgk.src;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.*;
 
-/*
-
-*/
 public class CardLayoutMain extends JFrame {
 
     private int currCard = 1;
-
     private CardLayout cObjl;
+    private final List<Map<String, String>> data;
+
+    private List<Map<String, String>> getData() {
+        List<Map<String, String>> questions = new ArrayList<>();
+
+        Map<String, String> q1 = new HashMap<>();
+        q1.put("id", "1");
+        q1.put("question", "What is the capital of France?");
+        q1.put("choice1", "Berlin");
+        q1.put("choice2", "Madrid");
+        q1.put("choice3", "Paris");
+        q1.put("choice4", "Rome");
+        q1.put("correctanswer", "choice3");
+        questions.add(q1);
+
+        Map<String, String> q2 = new HashMap<>();
+        q2.put("id", "2");
+        q2.put("question", "Which planet is known as the Red Planet?");
+        q2.put("choice1", "Earth");
+        q2.put("choice2", "Mars");
+        q2.put("choice3", "Jupiter");
+        q2.put("choice4", "Saturn");
+        q2.put("correctanswer", "choice2");
+        questions.add(q2);
+
+        Map<String, String> q3 = new HashMap<>();
+        q3.put("id", "3");
+        q3.put("question", "What is the largest ocean on Earth?");
+        q3.put("choice1", "Atlantic Ocean");
+        q3.put("choice2", "Indian Ocean");
+        q3.put("choice3", "Arctic Ocean");
+        q3.put("choice4", "Pacific Ocean");
+        q3.put("correctanswer", "choice4");
+        questions.add(q3);
+
+        Map<String, String> q4 = new HashMap<>();
+        q4.put("id", "4");
+        q4.put("question", "Which language is primarily used for Android development?");
+        q4.put("choice1", "Kotlin");
+        q4.put("choice2", "Swift");
+        q4.put("choice3", "JavaScript");
+        q4.put("choice4", "Ruby");
+        q4.put("correctanswer", "choice1");
+        questions.add(q4);
+
+        return questions;
+    }
+
+    private JPanel getQuestionPanel(String s) {
+        JTextArea questionText = new JTextArea(s);
+        questionText.setLineWrap(true);
+        questionText.setWrapStyleWord(true);
+        questionText.setEditable(false);
+        questionText.setOpaque(false);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(questionText, BorderLayout.CENTER);
+        return panel;
+    }
+
+    private JPanel getMultipleChoicePanel(List<String> choices) {
+        JPanel buttonPanel = new JPanel(new GridLayout(4, 1));
+        ButtonGroup buttonGroup = new ButtonGroup();
+        for (String choiceString : choices) {
+            JRadioButton choice = new JRadioButton(choiceString);
+            buttonGroup.add(choice);
+            buttonPanel.add(choice);
+        }
+        return buttonPanel;
+    }
+
+    private void addQuestionAnswerArea(JPanel parent, Map<String, String> obj) {
+        JPanel jPanel = new JPanel(new BorderLayout());
+        JPanel question = getQuestionPanel(obj.get("question"));
+        List<String> lst = new ArrayList<>();
+        lst.add(obj.get("choice1"));
+        lst.add(obj.get("choice2"));
+        lst.add(obj.get("choice3"));
+        lst.add(obj.get("choice4"));
+        JPanel answer = getMultipleChoicePanel(lst);
+        String constraint = obj.get("id");
+        jPanel.add(question, BorderLayout.NORTH);
+        jPanel.add(answer, BorderLayout.SOUTH);
+        parent.add(jPanel, constraint);
+    }
 
     public CardLayoutMain() {
 
@@ -21,28 +106,13 @@ public class CardLayoutMain extends JFrame {
         /* Organize questionPanel */
         JPanel questionPanel = new JPanel();
 
+        data = getData();
         cObjl = new CardLayout();
         questionPanel.setLayout(cObjl);
 
-        JPanel jPanel1 = new JPanel();
-        JPanel jPanel2 = new JPanel();
-        JPanel jPanel3 = new JPanel();
-        JPanel jPanel4 = new JPanel();
-
-        JLabel jLabel1 = new JLabel("C1");
-        JLabel jLabel2 = new JLabel("C2");
-        JLabel jLabel3 = new JLabel("C3");
-        JLabel jLabel4 = new JLabel("C4");
-
-        jPanel1.add(jLabel1);
-        jPanel2.add(jLabel2);
-        jPanel3.add(jLabel3);
-        jPanel4.add(jLabel4);
-
-        questionPanel.add(jPanel1, "1");
-        questionPanel.add(jPanel2, "2");
-        questionPanel.add(jPanel3, "3");
-        questionPanel.add(jPanel4, "4");
+        for (Map<String, String> obj : data) {
+            addQuestionAnswerArea(questionPanel, obj);
+        }
 
         /* Organize button panel */
         JPanel btnPanel = new JPanel();
