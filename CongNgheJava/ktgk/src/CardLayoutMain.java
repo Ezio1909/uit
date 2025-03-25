@@ -101,7 +101,8 @@ public class CardLayoutMain extends JFrame {
     public CardLayoutMain() {
 
         setTitle("Card Layout Methods");
-        setSize(310, 160);
+        setSize(500, 220);
+        setResizable(false);
 
         /* Organize questionPanel */
         JPanel questionPanel = new JPanel();
@@ -114,7 +115,46 @@ public class CardLayoutMain extends JFrame {
             addQuestionAnswerArea(questionPanel, obj);
         }
 
-        /* Organize button panel */
+        /* Organize button control area */
+        JPanel controlButtonPanel = new JPanel();
+        controlButtonPanel.setLayout(new BoxLayout(controlButtonPanel, BoxLayout.Y_AXIS));
+        Dimension squareSize = new Dimension(25, 20);
+        JButton buttonCtrl1 = new JButton("1");
+        JButton buttonCtrl2 = new JButton("2");
+        JButton buttonCtrl3 = new JButton("3");
+        JButton buttonCtrl4 = new JButton("4");
+        buttonCtrl1.setMaximumSize(squareSize);
+        buttonCtrl2.setMaximumSize(squareSize);
+        buttonCtrl3.setMaximumSize(squareSize);
+        buttonCtrl4.setMaximumSize(squareSize);
+        controlButtonPanel.add(buttonCtrl1);
+        controlButtonPanel.add(Box.createVerticalStrut(5));
+        controlButtonPanel.add(buttonCtrl2);
+        controlButtonPanel.add(Box.createVerticalStrut(5));
+        controlButtonPanel.add(buttonCtrl3);
+        controlButtonPanel.add(Box.createVerticalStrut(5));
+        controlButtonPanel.add(buttonCtrl4);
+
+        buttonCtrl1.addActionListener((ActionEvent ae) -> {
+            cObjl.show(questionPanel, "1");
+        });
+        buttonCtrl2.addActionListener((ActionEvent ae) -> {
+            cObjl.show(questionPanel, "2");
+        });
+        buttonCtrl3.addActionListener((ActionEvent ae) -> {
+            cObjl.show(questionPanel, "3");
+        });
+        buttonCtrl4.addActionListener((ActionEvent ae) -> {
+            cObjl.show(questionPanel, "4");
+        });
+
+        /* Combine quesiton panel and control button into one single panel*/
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(questionPanel, BorderLayout.CENTER);
+        mainPanel.add(controlButtonPanel, BorderLayout.EAST);
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        /* Organize navigation button panel */
         JPanel btnPanel = new JPanel();
 
         JButton firstButton = new JButton("First");
@@ -151,9 +191,9 @@ public class CardLayoutMain extends JFrame {
             }
         });
 
-        getContentPane().add(questionPanel, BorderLayout.NORTH);
-
+        getContentPane().add(mainPanel, BorderLayout.CENTER);
         getContentPane().add(btnPanel, BorderLayout.SOUTH);
+
     }
 
     public static void main(String argvs[]) {
